@@ -50,7 +50,8 @@ class DetailEventActivity : AppCompatActivity() {
                     binding.tvEventName.text = eventData.name
                     binding.tvOwnerName.text = eventData.ownerName
                     binding.tvEventDate.text = eventData.date
-                    binding.tvEventLocation.text = eventData.location
+                    binding.tvEventTime.text = eventData.beginTime // Menampilkan waktu acara
+                    binding.tvQuota.text = "Sisa Kuota: ${eventData.quota?.minus(eventData.registrants ?: 0)}" // Menampilkan sisa kuota
                     binding.tvDescription.text = HtmlCompat.fromHtml(
                         eventData.description ?: "",
                         HtmlCompat.FROM_HTML_MODE_LEGACY
