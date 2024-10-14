@@ -6,4 +6,7 @@
     <string name="buka_link">Buka Link</string>
     <string name="register">Register</string>
     <string name="picture_thumbnil">Picture thumbnil</string>
+    <string name="event_date">Tanggal Acara</string> <!-- Menambahkan string untuk tanggal acara -->
+    <string name="event_location">Lokasi Acara</string> <!-- Menambahkan string untuk lokasi acara -->
+    <string name="event_details_not_found">Detail acara tidak ditemukan</string> <!-- Pesan kesalahan jika detail tidak ditemukan -->
 </resources>

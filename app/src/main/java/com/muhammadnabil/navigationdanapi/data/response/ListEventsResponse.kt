@@ -16,7 +16,6 @@ data class ListEventsResponse(
 )
 
 data class ListEventsItem(
-
 	@field:SerializedName("summary")
 	val summary: String? = null,
 
@@ -57,8 +56,15 @@ data class ListEventsItem(
 	val endTime: String? = null,
 
 	@field:SerializedName("category")
-	val category: String? = null
+	val category: String? = null,
+
+	@field:SerializedName("date")
+	val date: String? = null,
+
+	@field:SerializedName("location")
+	val location: String? = null
 )
+
 
 data class BaseResponse(
 	@field:SerializedName("error")
@@ -70,7 +76,6 @@ data class BaseResponse(
 	val event : DetailEventResponse
 )
 data class DetailEventResponse(
-
 	@field:SerializedName("summary")
 	val summary: String? = null,
 
@@ -111,5 +116,11 @@ data class DetailEventResponse(
 	val endTime: String? = null,
 
 	@field:SerializedName("category")
-	val category: String? = null
+	val category: String? = null,
+
+	@field:SerializedName("date")
+	val date: String? = null,
+
+	@field:SerializedName("location")
+	val location: String? = null
 )
