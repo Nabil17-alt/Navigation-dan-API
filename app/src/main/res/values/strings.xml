@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Navigation dan API</string>
+    <string name="title_home">Home</string>
+    <string name="finished">Finished</string>
+    <string name="up_coming">Up Coming</string>
+    <string name="buka_link">Buka Link</string>
+    <string name="register">Register</string>
+    <string name="picture_thumbnil">Picture thumbnil</string>
+</resources>
