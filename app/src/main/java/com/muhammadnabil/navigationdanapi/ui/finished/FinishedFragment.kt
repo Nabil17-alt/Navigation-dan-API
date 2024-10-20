@@ -6,19 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.muhammadnabil.navigationdanapi.R
 import com.muhammadnabil.navigationdanapi.data.response.ListEventsResponse
 import com.muhammadnabil.navigationdanapi.data.retrofit.ApiConfig
 import com.muhammadnabil.navigationdanapi.databinding.FragmentFinishedBinding
-import com.muhammadnabil.navigationdanapi.databinding.FragmentUpComingBinding
 import com.muhammadnabil.navigationdanapi.ui.adapter.ListEventsAdapter
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class FinishedFragment : Fragment() {
 

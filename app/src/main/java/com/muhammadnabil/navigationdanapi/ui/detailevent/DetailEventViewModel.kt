@@ -6,6 +6,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.muhammadnabil.navigationdanapi.data.FavoriteEvent
+import com.muhammadnabil.navigationdanapi.data.FavoriteEventDao
+import com.muhammadnabil.navigationdanapi.data.FavoriteEventDatabase
 import com.muhammadnabil.navigationdanapi.data.response.BaseResponse
 import com.muhammadnabil.navigationdanapi.data.response.DetailEventResponse
 import com.muhammadnabil.navigationdanapi.data.retrofit.ApiConfig
@@ -14,12 +17,34 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailEventViewModel(application: Application) : AndroidViewModel(application) {
+class DetailEventViewModel (application: Application) : AndroidViewModel(application) {
+
+    private val favoriteEventDao: FavoriteEventDao =
+        FavoriteEventDatabase.getDatabase(application).favoriteEventDao()
 
     private val _event = MutableLiveData<DetailEventResponse?>()
     val event: LiveData<DetailEventResponse?> = _event
 
-    // Ubah ID parameter menjadi Int
+    fun isFavorite(eventId: String): LiveData<FavoriteEvent?> {
+        return favoriteEventDao.getFavoriteEventById(eventId)
+    }
+
+    fun toggleFavorite(event: FavoriteEvent) {
+        viewModelScope.launch {
+
+            val existingEvent = favoriteEventDao.getFavoriteEventByIdSync(event.id)
+
+            if (existingEvent == null) {
+
+                favoriteEventDao.insertFavoriteEvent(event)
+            } else {
+
+                favoriteEventDao.deleteFavoriteEventById(event.id)
+            }
+        }
+    }
+
+
     fun getDetailEvent(id: Int) {
         Log.d("DetailEventViewModel", "Fetching details for ID: $id")
 

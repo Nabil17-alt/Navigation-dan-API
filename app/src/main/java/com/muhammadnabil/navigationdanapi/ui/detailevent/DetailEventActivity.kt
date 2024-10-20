@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.muhammadnabil.navigationdanapi.R
 import android.os.Handler
 import android.os.Looper
+import com.muhammadnabil.navigationdanapi.data.FavoriteEvent
 
 class DetailEventActivity : AppCompatActivity() {
 
@@ -32,7 +33,7 @@ class DetailEventActivity : AppCompatActivity() {
         binding = ActivityDetailEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val eventId = intent.getIntExtra(EXTRA_EVENT_ID, -1)
+        val eventId = intent.getIntExtra(EXTRA_EVENT_ID, 8722)
 
         if (eventId == -1) {
             Log.e("DetailEventActivity", "Invalid Event ID")
@@ -41,17 +42,21 @@ class DetailEventActivity : AppCompatActivity() {
         Log.d("DetailEventActivity", "Event ID: $eventId")
 
         binding.progressBar.visibility = View.VISIBLE
-        viewModel.getDetailEvent(eventId)
 
-        viewModel.event.observe(this) { event ->
-            Handler(Looper.getMainLooper()).postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
+            viewModel.getDetailEvent(eventId)
+
+            viewModel.event.observe(this) { event ->
+
                 binding.progressBar.visibility = View.GONE
+
+                Log.d("DetailEventActivity", "Event data: $event")
                 event?.let { eventData ->
                     binding.tvEventName.text = eventData.name
                     binding.tvOwnerName.text = eventData.ownerName
                     binding.tvEventDate.text = eventData.date
-                    binding.tvEventTime.text = eventData.beginTime // Menampilkan waktu acara
-                    binding.tvQuota.text = "Sisa Kuota: ${eventData.quota?.minus(eventData.registrants ?: 0)}" // Menampilkan sisa kuota
+                    binding.tvEventTime.text = eventData.beginTime
+                    binding.tvQuota.text = "Sisa Kuota: ${eventData.quota?.minus(eventData.registrants ?: 0)}"
                     binding.tvDescription.text = HtmlCompat.fromHtml(
                         eventData.description ?: "",
                         HtmlCompat.FROM_HTML_MODE_LEGACY
@@ -71,15 +76,45 @@ class DetailEventActivity : AppCompatActivity() {
                             Log.e("DetailEventActivity", "Link is empty")
                         }
                     }
+
+                    viewModel.isFavorite(eventData.id.toString()).observe(this) { favoriteEvent ->
+                        if (favoriteEvent == null) {
+                            binding.ivBookmark.setImageResource(R.drawable.icon_favorite_border)
+                        } else {
+                            binding.ivBookmark.setImageResource(R.drawable.icon_favorite)
+                        }
+
+                        binding.ivBookmark.setOnClickListener {
+                            if (favoriteEvent == null) {
+
+                                val newFavoriteEvent = FavoriteEvent(
+                                    id = eventData.id.toString(),
+                                    name = eventData.name ?: "",
+                                    mediaCover = eventData.mediaCover ?: ""
+                                )
+                                viewModel.toggleFavorite(newFavoriteEvent)
+                                showSnackbar("Ditambahkan ke favorit")
+                            } else {
+
+                                viewModel.toggleFavorite(favoriteEvent)
+                                showSnackbar("Dihapus dari favorit")
+                            }
+                        }
+                    }
+
                 } ?: run {
                     Log.e("DetailEventActivity", "Event data is null")
                     showError("Event details not found")
                 }
-            }, 2000) // Simulasi loading selama 2 detik
-        }
+            }
+        }, 2000)
     }
 
     private fun showError(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 }

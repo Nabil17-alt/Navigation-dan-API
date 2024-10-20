@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_profile">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_profile"
         android:name="com.muhammadnabil.navigationdanapi.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
@@ -21,6 +21,18 @@
         android:name="com.muhammadnabil.navigationdanapi.ui.finished.FinishedFragment"
         android:label="Event Finished"
         tools:layout="@layout/fragment_finished" />
+
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.muhammadnabil.navigationdanapi.ui.favorite.FavoriteFragment"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.muhammadnabil.navigationdanapi.ui.settings.SettingsFragment"
+        android:label="settings"
+        tools:layout="@layout/fragment_settings" />
 
     
 </navigation>

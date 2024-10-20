@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.muhammadnabil.navigationdanapi.R
 import com.muhammadnabil.navigationdanapi.data.response.ListEventsResponse
 import com.muhammadnabil.navigationdanapi.data.retrofit.ApiConfig
 import com.muhammadnabil.navigationdanapi.databinding.FragmentUpComingBinding
